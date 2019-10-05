@@ -7,7 +7,7 @@ require_once('/var/libraries/composer/vendor/autoload.php');
 $response = file_get_contents('php://input');
 $data = json_decode($response, true);
 $dump = print_r($data, true);
-
+mail($config['mail'], 'Dump', $dump);
 
 if (isset($data['inline_query'])) {
   $inlineQueryId = $data['inline_query']['id'];
@@ -76,7 +76,7 @@ if (isset($data['inline_query'])) {
     'thumb_url' => 'https://img.kieran.de/8N3nfe4.png'
   ];
 
-  mail($mail, 'Debug', $dump .' ' . print_r($results,true));
+  mail($config['mail'], 'Debug', print_r($results,true));
   answerInlineQuery($inlineQueryId, $results, $offset);
   die();
 } else if (isset($data['chosen_inline_result'])) {
