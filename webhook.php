@@ -30,39 +30,35 @@ if (isset($data['inline_query'])) {
 
   if (empty($search)) {
     $results = [
-      [
-        'type' => 'article',
-        'id' => 1,
-        'title' => '🏳️‍🌈 How gay are you?',
-        'input_message_content' => array(
-          'message_text' => "🏳️‍🌈 I am $gay% gay!",
-          'parse_mode' => 'html',
-          'disable_web_page_preview' => true
-        ),
-        'reply_markup' => $replyMarkup,
-        'description' => 'Send your current gayness to this chat.',
-        'thumb_url' => 'https://img.kieran.de/8N3nfe4.png'
-      ]
+      'type' => 'article',
+      'id' => 1,
+      'title' => '🏳️‍🌈 How gay are you?',
+      'input_message_content' => array(
+        'message_text' => "🏳️‍🌈 I am $gay% gay!",
+        'parse_mode' => 'html',
+        'disable_web_page_preview' => true
+      ),
+      'reply_markup' => $replyMarkup,
+      'description' => 'Send your current gayness to this chat.',
+      'thumb_url' => 'https://img.kieran.de/8N3nfe4.png'
     ];
   } else {
     $results = [
-      [
-        'type' => 'article',
-        'id' => 1,
-        'title' => '🏳️‍🌈 How gay is ' . $search . '?',
-        'input_message_content' => array(
-          'message_text' => "🏳️‍🌈 $search is $gay% gay!",
-          'parse_mode' => 'html',
-          'disable_web_page_preview' => true
-        ),
-        'reply_markup' => $replyMarkup,
-        'description' => 'Send your current gayness to this chat.',
-        'thumb_url' => 'https://img.kieran.de/8N3nfe4.png'
-      ]
+      'type' => 'article',
+      'id' => 1,
+      'title' => '🏳️‍🌈 How gay is ' . $search . '?',
+      'input_message_content' => array(
+        'message_text' => "🏳️‍🌈 $search is $gay% gay!",
+        'parse_mode' => 'html',
+        'disable_web_page_preview' => true
+      ),
+      'reply_markup' => $replyMarkup,
+      'description' => 'Send your current gayness to this chat.',
+      'thumb_url' => 'https://img.kieran.de/8N3nfe4.png'
     ];
   }
 
-  $results[0][] = [
+  $results[] = [
     'type' => 'article',
     'id' => 2,
     'title' => '🏳️‍🌈 Help',
@@ -76,8 +72,8 @@ if (isset($data['inline_query'])) {
     'thumb_url' => 'https://img.kieran.de/8N3nfe4.png'
   ];
 
-  mail($config['mail'], 'Debug', print_r($results,true));
-  answerInlineQuery($inlineQueryId, $results, $offset);
+  mail($config['mail'], 'Debug', print_r($results, true));
+  answerInlineQuery($inlineQueryId, [$results], $offset);
   die();
 } else if (isset($data['chosen_inline_result'])) {
   die();
