@@ -112,7 +112,8 @@ if (isset($text)) {
     case '/start':
     case '/help':
       sendMessage($chatId, 'Hello!
-Simply type "@HowGayBot " into your text box and click one of the results or click the button attached to this message.
+      
+To use this bot, simply type "@HowGayBot " into your text box and click one of the results or click the button attached to this message.
 
 To set a custom gay text, write /text to me.', '', $replyMarkup);
       break;
