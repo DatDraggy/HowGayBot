@@ -24,7 +24,7 @@ if (isset($data['inline_query'])) {
   $senderUserId = $data['inline_query']['from']['id'];
   $search = $data['inline_query']['query'];
   $offset = 0;
-  
+
   $gay = rand(0, 100);
 
   $messageText = getCustomMessage($senderUserId);
@@ -114,7 +114,7 @@ if (isset($text)) {
       sendMessage($chatId, 'Hello!
 Simply type "@HowGayBot " into your text box and click one of the results or click the button attached to this message.
 
-To set a custom gay text, write /text to me.', $replyMarkup);
+To set a custom gay text, write /text to me.', '', $replyMarkup);
       break;
     case '/text':
       $customText = explode(' ', $text, 2)[1];
