@@ -73,7 +73,9 @@ if (isset($data['inline_query'])) {
     'id' => 2,
     'title' => '🏳️‍🌈 Help',
     'input_message_content' => array(
-      'message_text' => 'Either press the button attached to this message and select the chat you would like to post in or simply enter "@HowGayBot " into your text box.',
+      'message_text' => 'Either press the button attached to this message and select the chat you would like to post in or simply enter "@HowGayBot " into your text box.
+
+For a personalized gay message, send @HowGayBot a message!',
       'parse_mode' => 'html',
       'disable_web_page_preview' => true
     ),
