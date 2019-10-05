@@ -8,23 +8,23 @@ $response = file_get_contents('php://input');
 $data = json_decode($response, true);
 $dump = print_r($data, true);
 
+$replyMarkup = array(
+  'inline_keyboard' => array(
+    array(
+      array(
+        'text' => 'Share your gayness! 🏳️‍🌈',
+        'switch_inline_query' => ''
+      )
+    )
+  )
+);
+
 if (isset($data['inline_query'])) {
   $inlineQueryId = $data['inline_query']['id'];
   $senderUserId = $data['inline_query']['from']['id'];
   $search = $data['inline_query']['query'];
   $offset = 0;
-
-  $replyMarkup = array(
-    'inline_keyboard' => array(
-      array(
-        array(
-          'text' => 'Share your gayness! 🏳️‍🌈',
-          'switch_inline_query' => ''
-        )
-      )
-    )
-  );
-
+  
   $gay = rand(0, 100);
 
   $messageText = getCustomMessage($senderUserId);
@@ -112,8 +112,9 @@ if (isset($text)) {
     case '/start':
     case '/help':
       sendMessage($chatId, 'Hello!
-Simply type "@HowGayBot " into your text box and click one of the results.
-To set a custom gay text, write /text to me.');
+Simply type "@HowGayBot " into your text box and click one of the results or click the button attached to this message.
+
+To set a custom gay text, write /text to me.', $replyMarkup);
       break;
     case '/text':
       $customText = explode(' ', $text, 2)[1];
