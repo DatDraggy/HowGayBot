@@ -27,6 +27,13 @@ if (isset($data['inline_query'])) {
 
   $gay = rand(0, 100);
 
+  $messageText = getCustomMessage($senderUserId);
+  if (empty($messageText)) {
+    $messageText = "🏳️‍🌈 I am $gay% gay!";
+  }else{
+    $messageText = str_replace('%gay%', $gay.'%', $messageText);
+  }
+
   if (empty($search)) {
     $results = [
       [
@@ -34,7 +41,7 @@ if (isset($data['inline_query'])) {
         'id' => 1,
         'title' => '🏳️‍🌈 How gay are you?',
         'input_message_content' => array(
-          'message_text' => "🏳️‍🌈 I am $gay% gay!",
+          'message_text' => $messageText,
           'parse_mode' => 'html',
           'disable_web_page_preview' => true
         ),
@@ -60,6 +67,7 @@ if (isset($data['inline_query'])) {
       ]
     ];
   }
+
   array_push($results, [
     'type' => 'article',
     'id' => 2,
@@ -78,4 +86,43 @@ if (isset($data['inline_query'])) {
   die();
 } else if (isset($data['chosen_inline_result'])) {
   die();
+}
+
+if (isset($data['message']['text'])) {
+  $text = $data['message']['text'];
+}
+
+$chatId = $data['message']['chat']['id'];
+$chatType = $data['message']['chat']['type'];
+$senderUserId = preg_replace("/[^0-9]/", "", $data['message']['from']['id']);
+$messageId = $data['message']['message_id'];
+
+if (isset($text)) {
+  if (substr($text, '0', '1') == '/') {
+    $messageArr = explode(' ', $text);
+    $command = explode('@', $messageArr[0])[0];
+    if ($messageArr[0] == '/start' && isset($messageArr[1])) {
+      $command = '/' . $messageArr[1];
+    }
+  }
+
+  $command = strtolower($command);
+
+  switch ($command) {
+    case '/start':
+    case '/help':
+      sendMessage($chatId, 'Hello!
+Simply type "@HowGayBot " into your text box and click one of the results.');
+      break;
+    case '/text':
+      $customText = explode(' ', $text, 2)[1];
+      if(stripos($customText, '%gay%') === false){
+        sendMessage($chatId, 'The custom message must contain %gay%, which will be replaced with the gay-percentage. (e.g. 50%)');
+      }
+      else {
+        setCustomMessage($senderUserId, $customText);
+        sendMessage($chatId, 'Custom text was set. It may take a couple of minutes until it will show up.');
+      }
+      break;
+  }
 }

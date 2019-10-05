@@ -31,8 +31,18 @@ function answerInlineQuery($inlineQueryId, $results, $offset) {
   $data = array(
     'inline_query_id' => $inlineQueryId,
     'results' => $results,
-    'cache_time' => 300,
+    'cache_time' => 120,
     'is_personal' => true
   );
   return makeApiRequest('answerInlineQuery', $data);
+}
+
+function setCustomMessage($userId, $text) {
+  $json = json_decode(file_get_contents('texts.json'), true);
+  $json[$userId]['text'] = $text;
+  file_put_contents('texts.json', json_encode($json));
+}
+
+function getCustomMessage($userId) {
+  return json_decode(file_get_contents('texts.json'), true)[$userId]['text'];
 }
