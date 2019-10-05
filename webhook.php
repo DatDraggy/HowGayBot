@@ -30,8 +30,8 @@ if (isset($data['inline_query'])) {
   $messageText = getCustomMessage($senderUserId);
   if (empty($messageText)) {
     $messageText = "🏳️‍🌈 I am $gay% gay!";
-  }else{
-    $messageText = str_replace('%gay%', $gay.'%', $messageText);
+  } else {
+    $messageText = str_replace('%gay%', $gay . '%', $messageText);
   }
 
   if (empty($search)) {
@@ -112,16 +112,20 @@ if (isset($text)) {
     case '/start':
     case '/help':
       sendMessage($chatId, 'Hello!
-Simply type "@HowGayBot " into your text box and click one of the results.');
+Simply type "@HowGayBot " into your text box and click one of the results.
+To set a custom gay text, write /text to me.');
       break;
     case '/text':
       $customText = explode(' ', $text, 2)[1];
-      if(stripos($customText, '%gay%') === false){
-        sendMessage($chatId, 'The custom message must contain %gay%, which will be replaced with the gay-percentage. (e.g. 50%)');
-      }
-      else {
-        setCustomMessage($senderUserId, $customText);
-        sendMessage($chatId, 'Custom text was set. It may take a couple of minutes until it will show up.');
+      if (empty($customText)) {
+        sendMessage($chatId, 'You forgot to specify your text! <code>Example: /text I am not %gay% gay...</code>');
+      } else {
+        if (stripos($customText, '%gay%') === false) {
+          sendMessage($chatId, 'The custom message must contain %gay%, which will be replaced with the gay-percentage. (e.g. 50%)');
+        } else {
+          setCustomMessage($senderUserId, $customText);
+          sendMessage($chatId, 'Custom text was set. It may take a couple of minutes until it will show up.');
+        }
       }
       break;
   }
