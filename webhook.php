@@ -7,7 +7,6 @@ require_once('/var/libraries/composer/vendor/autoload.php');
 $response = file_get_contents('php://input');
 $data = json_decode($response, true);
 $dump = print_r($data, true);
-mail($config['mail'], 'Dump', $dump);
 
 if (isset($data['inline_query'])) {
   $inlineQueryId = $data['inline_query']['id'];
@@ -66,7 +65,7 @@ if (isset($data['inline_query'])) {
     'id' => 2,
     'title' => '🏳️‍🌈 Help',
     'input_message_content' => array(
-      'message_text' => "Result 2 Chosen",
+      'message_text' => 'Either press the button attached to this message and select the chat you would like to post in or simply enter "@HowGayBot " into your text box.',
       'parse_mode' => 'html',
       'disable_web_page_preview' => true
     ),
@@ -75,7 +74,6 @@ if (isset($data['inline_query'])) {
     'thumb_url' => 'https://img.kieran.de/8N3nfe4.png'
   ]);
 
-  mail($config['mail'], 'Debug', print_r($results, true));
   answerInlineQuery($inlineQueryId, $results, $offset);
   die();
 } else if (isset($data['chosen_inline_result'])) {
