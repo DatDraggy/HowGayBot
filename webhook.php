@@ -29,7 +29,7 @@ if (isset($data['inline_query'])) {
   $gay = rand(0, 100);
 
   if (empty($search)) {
-    $results = [
+    $results = [[
       'type' => 'article',
       'id' => 1,
       'title' => '🏳️‍🌈 How gay are you?',
@@ -41,9 +41,9 @@ if (isset($data['inline_query'])) {
       'reply_markup' => $replyMarkup,
       'description' => 'Send your current gayness to this chat.',
       'thumb_url' => 'https://img.kieran.de/8N3nfe4.png'
-    ];
+    ]];
   } else {
-    $results = [
+    $results = [[
       'type' => 'article',
       'id' => 1,
       'title' => '🏳️‍🌈 How gay is ' . $search . '?',
@@ -53,12 +53,12 @@ if (isset($data['inline_query'])) {
         'disable_web_page_preview' => true
       ),
       'reply_markup' => $replyMarkup,
-      'description' => 'Send your current gayness to this chat.',
+      'description' => 'Send '.$search.'\'s gayness to this chat.',
       'thumb_url' => 'https://img.kieran.de/8N3nfe4.png'
-    ];
+    ]];
   }
 
-  $results[] = [
+  $results[0][] = [
     'type' => 'article',
     'id' => 2,
     'title' => '🏳️‍🌈 Help',
@@ -73,7 +73,7 @@ if (isset($data['inline_query'])) {
   ];
 
   mail($config['mail'], 'Debug', print_r($results, true));
-  answerInlineQuery($inlineQueryId, [$results], $offset);
+  answerInlineQuery($inlineQueryId, $results, $offset);
   die();
 } else if (isset($data['chosen_inline_result'])) {
   die();
