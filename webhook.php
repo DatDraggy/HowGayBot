@@ -27,9 +27,15 @@ if (isset($data['inline_query'])) {
 
   $gay = rand(0, 100);
 
+
   $messageText = getCustomMessage($senderUserId);
   if (empty($messageText)) {
-    $messageText = "🏳️‍🌈 I am $gay% gay!";
+    if ($data['inline_query_from']['from']['language_code'] === 'de') {
+      $messageText = "🏳️‍🌈 Ich bin $gay% schwul!";
+      setCustomMessage($senderUserId, '🏳️‍🌈 Ich bin %gay% schwul!');
+    } else {
+      $messageText = "🏳️‍🌈 I am $gay% gay!";
+    }
   } else {
     $messageText = str_replace('%gay%', $gay . '%', $messageText);
   }
