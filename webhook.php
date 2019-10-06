@@ -30,7 +30,7 @@ if (isset($data['inline_query'])) {
 
   $messageText = getCustomMessage($senderUserId);
   if (empty($messageText)) {
-    if ($data['inline_query_from']['from']['language_code'] === 'de') {
+    if ($data['inline_query']['from']['language_code'] === 'de') {
       $messageText = "🏳️‍🌈 Ich bin $gay% schwul!";
       setCustomMessage($senderUserId, '🏳️‍🌈 Ich bin %gay% schwul!');
     } else {
