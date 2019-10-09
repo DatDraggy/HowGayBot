@@ -27,7 +27,6 @@ if (isset($data['inline_query'])) {
 
   $gay = rand(0, 100);
 
-
   $messageText = getCustomMessage($senderUserId);
   if (empty($messageText)) {
     if ($data['inline_query']['from']['language_code'] === 'de') {
