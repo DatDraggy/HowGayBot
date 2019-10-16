@@ -31,7 +31,7 @@ function answerInlineQuery($inlineQueryId, $results, $offset) {
   $data = array(
     'inline_query_id' => $inlineQueryId,
     'results' => $results,
-    'cache_time' => 1,
+    'cache_time' => 60,
     'is_personal' => true
   );
   return makeApiRequest('answerInlineQuery', $data);
