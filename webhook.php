@@ -132,6 +132,7 @@ To set a custom gay text, write /text to me.', '', $replyMarkup);
         if (stripos($customText, '%gay%') === false) {
           sendMessage($chatId, 'The custom message must contain %gay%, which will be replaced with the gay-percentage. (e.g. 50%)');
         } else {
+          $customText = str_replace('<', '', $customText);
           setCustomMessage($senderUserId, $customText);
           sendMessage($chatId, 'Custom text was set. It may take a couple of minutes until it will show up.');
         }
