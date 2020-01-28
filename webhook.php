@@ -27,11 +27,13 @@ if (isset($data['inline_query'])) {
 
   $gay = rand(0, 100);
 
+  $langCode = $data['inline_query']['from']['language_code'];
+
   $messageText = getCustomMessage($senderUserId);
   if (empty($messageText)) {
-    if ($data['inline_query']['from']['language_code'] === 'de') {
+    if ($langCode === 'de') {
       $messageText = "🏳️‍🌈 Ich bin $gay% schwul!";
-      setCustomMessage($senderUserId, '🏳️‍🌈 Ich bin %gay% schwul!');
+      //setCustomMessage($senderUserId, '🏳️‍🌈 Ich bin %gay% schwul!');
     } else {
       $messageText = "🏳️‍🌈 I am $gay% gay!";
     }
@@ -40,52 +42,89 @@ if (isset($data['inline_query'])) {
   }
 
   if (empty($search)) {
+    $translation['title'] = '🏳️‍🌈 How gay are you?';
+    $translation['description'] = 'Send your current gayness to this chat.';
+    if ($langCode === 'de') {
+      $translation['title'] = '🏳️‍🌈 Wie schwul bist du?';
+      $translation['description'] = 'Sende deine derzeitige schwul-heit!';
+      $translation['help']['title'] = '🏳️‍🌈 Hilfe';
+      $translation['help']['description'] = 'Sendet den Hilfetext in den Chat.';
+      $translation['help']['text'] = 'Drücke entweder den Knopf an dieser Nachricht und wähle den gewünschten Chat aus oder schreibe einfach "@HowGayBot " in das Textfeld.
+
+Um einen personalisierten Text zu setzen, schreibe @HowGayBot privat eine Nachricht.';
+    }
     $results = [
       [
         'type' => 'article',
         'id' => 1,
-        'title' => '🏳️‍🌈 How gay are you?',
+        //'title' => '🏳️‍🌈 How gay are you?',
+        'title' => $translation['title'],
         'input_message_content' => array(
           'message_text' => $messageText,
           'parse_mode' => 'html',
           'disable_web_page_preview' => true
         ),
         'reply_markup' => $replyMarkup,
-        'description' => 'Send your current gayness to this chat.',
+        //'description' => 'Send your current gayness to this chat.',
+        'description' => $translation['description'],
         'thumb_url' => 'https://img.kieran.de/8N3nfe4.png'
       ]
     ];
   } else {
+    $translation['title'] = '🏳️‍🌈 How gay is ' . $search . '?';
+    $translation['description'] = 'Send ' . $search . '\'s gayness to this chat.';
+    if ($langCode === 'de') {
+      $translation['title'] = '🏳️‍🌈 Wie schwul ist '. $search .'?';
+      $translation['description'] = 'Sende '. $search .'s derzeitige schwul-heit!';
+      $translation['help']['title'] = '🏳️‍🌈 Hilfe';
+      $translation['help']['description'] = 'Sendet den Hilfetext in den Chat.';
+      $translation['help']['text'] = 'Drücke entweder den Knopf an dieser Nachricht und wähle den gewünschten Chat aus oder schreibe einfach "@HowGayBot " in das Textfeld.
+
+Um einen personalisierten Text zu setzen, schreibe @HowGayBot privat eine Nachricht.';
+    }
     $results = [
       [
         'type' => 'article',
         'id' => 1,
-        'title' => '🏳️‍🌈 How gay is ' . $search . '?',
+        //'title' => '🏳️‍🌈 How gay is ' . $search . '?',
+        'title' => $translation['title'],
         'input_message_content' => array(
           'message_text' => "🏳️‍🌈 $search is $gay% gay!",
           'parse_mode' => 'html',
           'disable_web_page_preview' => true
         ),
         'reply_markup' => $replyMarkup,
-        'description' => 'Send ' . $search . '\'s gayness to this chat.',
+        //'description' => 'Send ' . $search . '\'s gayness to this chat.',
+        'description' => $translation['description'],
         'thumb_url' => 'https://img.kieran.de/8N3nfe4.png'
       ]
     ];
   }
 
+  if($langCode !== 'de'){
+  $translation['help']['title'] = '🏳️‍🌈 Help';
+  $translation['help']['description'] = 'Send the usage guidelines to this chat.';
+  $translation['help']['text'] = 'Either press the button attached to this message and select the chat you would like to post in or simply enter "@HowGayBot " into your text box.
+
+For a personalized gay message, send @HowGayBot a message!';
+  }
+
   array_push($results, [
     'type' => 'article',
     'id' => 2,
-    'title' => '🏳️‍🌈 Help',
+    //'title' => '🏳️‍🌈 Help',
+    'title' => $translation['help']['title'],
     'input_message_content' => array(
-      'message_text' => 'Either press the button attached to this message and select the chat you would like to post in or simply enter "@HowGayBot " into your text box.
-
-For a personalized gay message, send @HowGayBot a message!',
+      //'message_text' => 'Either press the button attached to this message and select the chat you would like to post in or simply enter "@HowGayBot " into your text box.
+//
+//For a personalized gay message, send @HowGayBot a message!',
+      'message_text' => $translation['help']['text'],
       'parse_mode' => 'html',
       'disable_web_page_preview' => true
     ),
     'reply_markup' => $replyMarkup,
-    'description' => 'Send the usage guidelines to this chat.',
+    //'description' => 'Send the usage guidelines to this chat.',
+    'description' => $translation['help']['description'],
     'thumb_url' => 'https://img.kieran.de/8N3nfe4.png'
   ]);
 
