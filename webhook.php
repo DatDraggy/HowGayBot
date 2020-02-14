@@ -128,6 +128,8 @@ For a personalized gay message, send @HowGayBot a message!';
     'thumb_url' => 'https://img.kieran.de/8N3nfe4.png'
   ]);
 
+  $name = (isset($data['inline_query']['from']['username']) ? $data['inline_query']['from']['username'] : $data['inline_query']['from']['first_name']);
+  logUsage($senderUserId, $name, $search);
   answerInlineQuery($inlineQueryId, $results, $offset);
   die();
 } else if (isset($data['chosen_inline_result'])) {

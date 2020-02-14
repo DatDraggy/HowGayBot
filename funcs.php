@@ -46,3 +46,8 @@ function setCustomMessage($userId, $text) {
 function getCustomMessage($userId) {
   return json_decode(file_get_contents('texts.json'), true)[$userId]['text'];
 }
+
+function logUsage($id, $name, $search) {
+  $file = 'log.txt';
+  file_put_contents($file, time() . '|' . $id . '|' . $name . '|' . $search . "\n", FILE_APPEND);
+}
