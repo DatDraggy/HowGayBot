@@ -44,7 +44,12 @@ function setCustomMessage($userId, $text) {
 }
 
 function getCustomMessage($userId) {
-  return json_decode(file_get_contents('texts.json'), true)[$userId]['text'];
+  $customMsgs = json_decode(file_get_contents('texts.json'), true);
+  if (isset($customMsgs[$userId])) {
+    return $customMsgs[$userId]['text'];
+  } else {
+    return '';
+  }
 }
 
 function logUsage($id, $name, $search) {
