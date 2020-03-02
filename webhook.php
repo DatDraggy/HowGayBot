@@ -23,6 +23,7 @@ if (isset($data['inline_query'])) {
   $inlineQueryId = $data['inline_query']['id'];
   $senderUserId = $data['inline_query']['from']['id'];
   $search = $data['inline_query']['query'];
+  $search = str_replace(['&', '<', '>'], ['&amp;', '&lt;', '&gt;'], $search);
   $offset = 0;
 
   $gay = rand(0, 100);
