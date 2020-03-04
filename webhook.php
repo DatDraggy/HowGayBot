@@ -156,6 +156,10 @@ if (isset($text)) {
     }
   }
 
+  if (!isset($command)) {
+    $command = '/start';
+  }
+
   $command = strtolower($command);
 
   switch ($command) {
@@ -168,10 +172,11 @@ To use this bot, simply type "@HowGayBot " into your text box and click one of t
 To set a custom gay text, write /text to me.', '', $replyMarkup);
       break;
     case '/text':
-      $customText = explode(' ', $text, 2)[1];
-      if (empty($customText)) {
+      $customText = explode(' ', $text, 2);
+      if (!isset($customText[1])) {
         sendMessage($chatId, 'You forgot to specify your text! <code>Example: /text I am not %gay% gay...</code>');
       } else {
+        $customText = $customText[1];
         if (stripos($customText, '%gay%') === false) {
           sendMessage($chatId, 'The custom message must contain %gay%, which will be replaced with the gay-percentage. (e.g. 50%)');
         } else {
