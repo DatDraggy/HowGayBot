@@ -177,8 +177,8 @@ To set a custom gay text, write /text to me.', '', $replyMarkup);
         sendMessage($chatId, 'You forgot to specify your text! <code>Example: /text I am not %gay% gay...</code>');
       } else {
         $customText = $customText[1];
-        if (stripos($customText, ' %gay%') === false) {
-          sendMessage($chatId, 'The custom message must contain %gay% with a space before, which will be replaced with the gay-centage. (e.g. 50%)');
+        if (stripos($customText, '%gay%') === false || substr_count($customText, '%gay%') > 1) {
+          sendMessage($chatId, 'The custom message must contain one %gay%, which will be replaced with the gay-centage. (e.g. 50%)');
         } else {
           $customText = str_replace('<', '&lt;', $customText);
           $customText = str_replace('>', '&gt;', $customText);
