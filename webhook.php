@@ -27,7 +27,11 @@ if (isset($data['inline_query'])) {
 
   $gay = rand(0, 100);
 
-  $langCode = $data['inline_query']['from']['language_code'];
+  if (isset($data['inline_query']['from']['language_code'])) {
+    $langCode = $data['inline_query']['from']['language_code'];
+  } else {
+    $langCode = '';
+  }
 
   $messageText = getCustomMessage($senderUserId);
   if (empty($messageText)) {
@@ -142,11 +146,14 @@ if (isset($data['message']['text'])) {
   $text = $data['message']['text'];
 }
 
-$chatId = $data['message']['chat']['id'];
-$chatType = $data['message']['chat']['type'];
-$senderUserId = preg_replace("/[^0-9]/", "", $data['message']['from']['id']);
-$messageId = $data['message']['message_id'];
-
+if (isset($data['message'])) {
+  $chatId = $data['message']['chat']['id'];
+  $chatType = $data['message']['chat']['type'];
+  $senderUserId = preg_replace("/[^0-9]/", "", $data['message']['from']['id']);
+  $messageId = $data['message']['message_id'];
+} else {
+  mail('admin@kieran.de', 'Debug empty msg', print_r($data, true));
+}
 if (isset($text)) {
   if (substr($text, '0', '1') == '/') {
     $messageArr = explode(' ', $text);
