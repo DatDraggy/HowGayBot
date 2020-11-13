@@ -151,9 +151,12 @@ if (isset($data['message'])) {
   $chatType = $data['message']['chat']['type'];
   $senderUserId = preg_replace("/[^0-9]/", "", $data['message']['from']['id']);
   $messageId = $data['message']['message_id'];
+} else if (isset($data['edited_message'])) {
+  die();
 } else {
   mail('admin@kieran.de', 'Debug empty msg', print_r($data, true));
 }
+
 if (isset($text)) {
   if (substr($text, '0', '1') == '/') {
     $messageArr = explode(' ', $text);
