@@ -154,7 +154,7 @@ if (isset($data['message'])) {
 } else if (isset($data['edited_message'])) {
   die();
 } else {
-  mail('admin@kieran.de', 'Debug empty msg', print_r($data, true));
+  mail($config['mail'], 'Debug empty msg', print_r($data, true));
 }
 
 if (isset($text)) {
