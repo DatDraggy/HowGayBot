@@ -107,7 +107,7 @@ Um einen personalisierten Text zu setzen, schreibe @HowGayBot privat eine Nachri
     ];
   }
 
-  if($langCode !== 'de'){
+  if($langCode !== 'de') {
   $translation['help']['title'] = '🏳️‍🌈 Help';
   $translation['help']['description'] = 'Send the usage guidelines to this chat.';
   $translation['help']['text'] = 'Either press the button attached to this message and select the chat you would like to post in or simply enter "@HowGayBot " into your text box.
@@ -140,17 +140,14 @@ For a personalized gay message, send @HowGayBot a message!';
   die();
 } else if (isset($data['chosen_inline_result'])) {
   die();
-}
-
-if (isset($data['message']['text'])) {
-  $text = $data['message']['text'];
-}
-
-if (isset($data['message'])) {
+} else if (isset($data['channel_post'])) {
+  leaveChat($data['channel_post']['chat']['id']);
+} else if (isset($data['message'])) {
   $chatId = $data['message']['chat']['id'];
   $chatType = $data['message']['chat']['type'];
   $senderUserId = preg_replace("/[^0-9]/", "", $data['message']['from']['id']);
   $messageId = $data['message']['message_id'];
+  $text = $data['message']['text'];
 } else if (isset($data['edited_message'])) {
   die();
 } else {

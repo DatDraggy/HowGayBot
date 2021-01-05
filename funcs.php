@@ -12,6 +12,14 @@ function sendMessage($chatId, $text, $replyTo = '', $replyMarkup = '') {
   makeApiRequest('sendMessage', $data);
 }
 
+function leaveChat($chatId) {
+  global $config;
+  $data = array(
+    'chat_id' => $chatId
+  );
+  makeApiRequest('leaveChat', $data);
+}
+
 function makeApiRequest($method, $data) {
   global $config, $client;
   if (!($client instanceof \GuzzleHttp\Client)) {
