@@ -141,7 +141,7 @@ For a personalized gay message, send @HowGayBot a message!';
 } else if (isset($data['chosen_inline_result'])) {
   die();
 } else if (isset($data['channel_post'])) {
-  leaveChat($data['channel_post']['chat']['id']);
+  mail($config['mail'], 'Bot is Admin in Channel', print_r($data, true));
 } else if (isset($data['message'])) {
   $chatId = $data['message']['chat']['id'];
   $chatType = $data['message']['chat']['type'];
