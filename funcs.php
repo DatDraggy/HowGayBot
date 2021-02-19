@@ -29,10 +29,26 @@ function makeApiRequest($method, $data) {
     $response = $client->request('POST', $method, array('json' => $data));
   } catch (\GuzzleHttp\Exception\BadResponseException $e) {
     $body = $e->getResponse()->getBody();
+    $json = json_decode($body->getContents());
+    if (ignoreError($json)) {
+      return false;
+    }
     mail($config['mail'], 'Error', print_r($body->getContents(), true) . "\n" . print_r($data, true) . "\n" . __FILE__);
     return false;
   }
   return json_decode($response->getBody(), true)['result'];
+}
+
+function ignoreError($json) {
+  //Not the coolest but oh well, it works for now
+  $descriptions = [
+      'Bad Request: query is too old and response timeout expired or query ID is invalid'
+  ];
+
+  if (in_array($json->description, $descriptions)) {
+    return true;
+  }
+  return false;
 }
 
 function answerInlineQuery($inlineQueryId, $results, $offset) {

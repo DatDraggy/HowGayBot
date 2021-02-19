@@ -170,6 +170,9 @@ if (isset($text)) {
   $command = strtolower($command);
 
   switch ($command) {
+    case '/test':
+      sendMessage('a', 'a');
+      break;
     case '/start':
     case '/help':
       sendMessage($chatId, 'Hello!
