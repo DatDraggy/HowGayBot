@@ -28,12 +28,12 @@ function makeApiRequest($method, $data) {
   try {
     $response = $client->request('POST', $method, array('json' => $data));
   } catch (\GuzzleHttp\Exception\BadResponseException $e) {
-    $body = $e->getResponse()->getBody();
-    $json = json_decode($body->getContents());
+    $body = $e->getResponse()->getBody()->getContents();
+    $json = json_decode($body);
     if (ignoreError($json)) {
       return false;
     }
-    mail($config['mail'], 'Error', print_r($body->getContents(), true) . "\n" . print_r($data, true) . "\n" . __FILE__);
+    mail($config['mail'], 'Error', print_r($body, true) . "\n" . print_r($data, true) . "\n" . __FILE__);
     return false;
   }
   return json_decode($response->getBody(), true)['result'];
