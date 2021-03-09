@@ -149,7 +149,9 @@ For a personalized gay message, send @HowGayBot a message!';
   $messageId = $data['message']['message_id'];
   $text = $data['message']['text'];
 } else if (isset($data['edited_message'])) {
-  die();
+    die();
+} else if (isset($data['my_chat_member'])) {
+    die();
 } else {
   mail($config['mail'], 'Debug empty msg', print_r($data, true));
 }
