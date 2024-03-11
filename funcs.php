@@ -127,6 +127,17 @@ function getCustomMessage($userId) {
 }
 
 function logUsage($id, $name, $search) {
-    $file = 'log.txt';
-    file_put_contents($file, time() . '|' . $id . '|' . $name . '|' . $search . "\n", FILE_APPEND);
+    global $config;
+
+    $dbConnection = buildDatabaseConnection($config);
+
+    try {
+        $stmt = $dbConnection->prepare('INSERT INTO howgay_log(user_id, nickname, search) VALUES (:user_id, :name, :search)');
+        $stmt->bindParam(':user_id', $id);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':search', $search);
+        $stmt->execute();
+    } catch (\PDOException $e) {
+        notifyOnException('Database Insert', $config, '', $e);
+    }
 }
