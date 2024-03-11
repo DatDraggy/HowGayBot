@@ -121,11 +121,6 @@ function getCustomMessage($userId) {
 
     if ($stmt->rowCount() === 1) {
         return $row['text'];
-    }
-
-    $customMsgs = json_decode(file_get_contents('texts.json'), true);
-    if (isset($customMsgs[$userId])) {
-        return $customMsgs[$userId]['text'];
     } else {
         return '';
     }
