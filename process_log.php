@@ -9,10 +9,10 @@ if ($handle) {
 
         $entries = explode('|', $line, 4);
 
-        $id = $entries[0];
-        $name = $entries[1];
-        $time = $entries[2];
-        $search = $entries[2];
+        $time = $entries[0] ?? '';
+        $id = $entries[1] ?? '';
+        $name = $entries[2] ?? '';
+        $search = $entries[3] ?? '';
 
         try {
             $stmt = $dbConnection->prepare("INSERT INTO howgay_log(user_id, nickname, search, created_at) VALUES (:user_id, :name, :search, date_add('1970-01-01', INTERVAL :time SECOND))");
